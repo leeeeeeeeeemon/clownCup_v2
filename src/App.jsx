@@ -125,7 +125,7 @@ function HeroSection() {
           <div className="game-badge badge-worm mb-3">🐛 Wormix</div>
           <p className="text-sm text-gray-300 leading-relaxed">
             <span className="font-bold text-green-400">BO1 Дуэль на арене</span>
-            <br />Проигравший доначит стримеру с{' '}
+            <br />{' '}
             <span className="text-yellow-400 font-bold">«Ко-ко-шнейне»</span> 🐔
           </p>
         </div>
