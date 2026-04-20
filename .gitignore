@@ -1,0 +1,31 @@
+# Зависимости
+node_modules/
+.npm
+
+# Сборка
+dist/
+dist-ssr/
+*.local
+
+# Env-файлы (не коммитить секреты!)
+.env
+.env.local
+.env.*.local
+
+# Логи
+logs/
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
