@@ -3,7 +3,8 @@ import { useState, useEffect, useCallback } from 'react'
 // ============================================================
 // ⚙️  КОНФИГУРАЦИЯ — URL Google Apps Script
 // ============================================================
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzVNc1YZmzTx6zgy2UobQdxx20ieeMoGx8SBX8wAzWvJOrIQYED5qJ1MpGi4DZlfP0/exec'
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw0eNND19ATEEP3bLxkcuxK1-LOMcCPOX3DjCX4lXQBcmD4OFqxLaYlnlwyEGl67dfY/exec'
+
 const LS_KEY = 'clown-cup-teams'
 
 // Количество игроков в команде
@@ -532,7 +533,7 @@ function TeamsList({ teams, isOrganizer, onOrganizerToggle, onKick, loading }) {
             disabled={!teams.length}
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-purple-400 bg-purple-950/40 border border-purple-500/20 hover:border-purple-500/50 transition-all disabled:opacity-30"
           >
-            Skachat JSON
+            📥 Скачать JSON
           </button>
         </div>
 
@@ -544,21 +545,21 @@ function TeamsList({ teams, isOrganizer, onOrganizerToggle, onKick, loading }) {
             onChange={(e) => onOrganizerToggle(e.target.checked)}
           />
           <span className="text-sm font-bold text-purple-400 group-hover:text-purple-300 transition-colors">
-            Rezhim organizatora (pokazat knopki Kiknut)
+            Режим организатора (показать кнопки «Кикнуть»)
           </span>
         </label>
 
         {loading && (
           <div className="text-center text-gray-500 py-10 text-sm font-bold animate-pulse">
-            Zagruzhaem komandy iz shtaba...
+            ⏳ Загружаем команды из штаба...
           </div>
         )}
 
         {!loading && teams.length === 0 && (
           <div className="text-center py-16">
-            <div className="text-6xl mb-4 select-none">...</div>
-            <p className="text-gray-500 font-bold text-lg">Poka nikogo net.</p>
-            <p className="text-gray-600 text-sm mt-1">Bud pervym\!</p>
+            <div className="text-6xl mb-4 select-none">😭</div>
+            <p className="text-gray-500 font-bold text-lg">Пока никого нет.</p>
+            <p className="text-gray-600 text-sm mt-1">Будь первым! Или позови скибиди-тойлет.</p>
           </div>
         )}
 
@@ -578,6 +579,9 @@ function TeamsList({ teams, isOrganizer, onOrganizerToggle, onKick, loading }) {
   )
 }
 
+// ============================================================
+// 🧭 Navbar
+// ============================================================
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
@@ -587,31 +591,41 @@ function Navbar() {
   }, [])
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'bg-black/70 backdrop-blur-md border-b border-white/5' : ''}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      scrolled ? 'bg-black/70 backdrop-blur-md border-b border-white/5' : ''
+    }`}>
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="font-black text-sm tracking-widest uppercase">
           <span className="text-gradient-green">Clown</span>
           <span className="text-white">Cup</span>
           <span className="text-gray-600 ml-1 text-xs">v2</span>
         </div>
-        <a href="#register" className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest text-black" style={{ background: 'linear-gradient(135deg, #00ff88, #00aaff)' }}>
-          Zapisatsya
+        <a href="#register"
+          className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest text-black"
+          style={{ background: 'linear-gradient(135deg, #00ff88, #00aaff)' }}>
+          Записаться
         </a>
       </div>
     </nav>
   )
 }
 
+// ============================================================
+// 🦶 Footer
+// ============================================================
 function Footer() {
   return (
     <footer className="text-center py-8 px-4 border-t border-white/5">
       <p className="text-xs text-gray-700 font-bold tracking-wider uppercase">
-        2025 Kibertroeborg - GG WP - Bombardiro Krokodilo champion
+        © 2025 Кибертроеборье · Этот сайт не продаётся за 322 рубля · GG WP · Бомбардиро Крокодило чемпион
       </p>
     </footer>
   )
 }
 
+// ============================================================
+// 🎯 APP
+// ============================================================
 export default function App() {
   const [teams, setTeams]             = useState([])
   const [isOrganizer, setIsOrganizer] = useState(false)
@@ -632,10 +646,10 @@ export default function App() {
         setTeams(remote)
         lsSave(remote)
       } catch (err) {
-        console.warn('Google Sheets nedostupen:', err)
+        console.warn('Google Sheets недоступен, LocalStorage:', err)
         const local = lsLoad()
         setTeams(local)
-        if (local.length > 0) addToast('Zagruzheno iz kesha (' + local.length + ' komand)', 'info')
+        if (local.length > 0) addToast(`Загружено из кэша (${local.length} команд) 💾`, 'info')
       } finally {
         setLoadingTeams(false)
       }
@@ -649,7 +663,7 @@ export default function App() {
 
   const handleKick = useCallback((id) => {
     setTeams((prev) => { const u = prev.filter((t) => t.id !== id); lsSave(u); return u })
-    addToast('Komanda kiknutya.', 'success')
+    addToast('Команда кикнута. Скибиди-баст. 💀', 'success')
   }, [addToast])
 
   const handleOrganizerToggle = useCallback((val) => setIsOrganizer(val), [])
